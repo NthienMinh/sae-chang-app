@@ -28,7 +28,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.sae_chang"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -38,11 +38,11 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.sae_chang"
+        applicationId = "vn.edu.saechang.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 23
+        targetSdk = 34
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
@@ -58,4 +58,12 @@ android {
 
 flutter {
     source = "../.."
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.squareup.okhttp:okhttp:2.7.5'
+        force 'com.squareup.okio:okio:1.17.5'
+        force 'androidx.work:work-runtime:2.7.1'
+    }
 }
