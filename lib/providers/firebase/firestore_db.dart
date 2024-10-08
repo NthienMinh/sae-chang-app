@@ -9,7 +9,7 @@ class FireStoreDb {
   static FireStoreDb instance = FireStoreDb._privateConstructor();
   FirebaseFirestore get db {
     return FirebaseFirestore.instanceFor(
-        app: Firebase.app(), databaseId: "dacnham");
+        app: Firebase.app(), databaseId: "sae-chang");
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> getUserByEmail(

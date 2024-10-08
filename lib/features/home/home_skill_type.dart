@@ -11,18 +11,18 @@ enum HomeSkillType {
 }
 
 extension HomeSkillExtension on HomeSkillType {
-  String get iconRed {
+  String get icon {
     switch (this) {
       case HomeSkillType.vocabulary:
-        return 'assets/icons/ic_home_vocabulary_red.png';
+        return 'assets/icons/ic_learn_9.png';
       case HomeSkillType.listening:
-        return 'assets/icons/ic_home_listening_red.png';
+        return 'assets/icons/ic_learn_10.png';
       case HomeSkillType.reading:
-        return 'assets/icons/ic_home_reading_red.png';
+        return 'assets/icons/ic_learn_6.png';
       case HomeSkillType.grammar:
-        return 'assets/icons/ic_home_grammar_red.png';
+        return 'assets/icons/ic_learn_8.png';
       default:
-        return 'assets/images/img_logo_2.png';
+        return 'assets/images/img_logo.png';
     }
   }
 

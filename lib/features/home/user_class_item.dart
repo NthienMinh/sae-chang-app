@@ -9,12 +9,12 @@ class UserClassItem extends StatelessWidget {
   const UserClassItem(
       {super.key,
       required this.isCompleted,
+      required this.index,
       required this.onPressed,
       required this.description,
       required this.classCode,
       required this.title,
       required this.isPrimary,
-      required this.level,
       required this.progress,
       required this.text});
   final bool isCompleted;
@@ -23,9 +23,9 @@ class UserClassItem extends StatelessWidget {
   final String classCode;
   final String title;
   final bool isPrimary;
-  final String level;
   final double progress;
   final String text;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class UserClassItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         side: BorderSide(
             color: isCompleted ? greyColor.shade600 : primaryColor,
-            width: Resizable.size(context, 1)),
+            width: Resizable.size(context, 1.5)),
         borderRadius: BorderRadius.circular(Resizable.size(context, 20)),
       ),
       elevation: Resizable.padding(context, 3),
@@ -50,119 +50,96 @@ class UserClassItem extends StatelessWidget {
       child: InkWell(
           onTap: onPressed,
           borderRadius: BorderRadius.circular(Resizable.size(context, 20)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(
-                        top: Resizable.padding(context, 15),
-                        left: Resizable.padding(context, 10),
-                        right: Resizable.padding(context, 10)),
-                    padding: EdgeInsets.all(Resizable.padding(context, 10)),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: lightGradientColor),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 3, color: lightBrownColor),
-                    ),
-                    child: Text(level.toUpperCase(),
-                        style: TextStyle(
-                            color: darkRedColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: Resizable.font(context, 18)))),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(
-                    top: Resizable.padding(context, 15),
-                    left: Resizable.padding(context, 5),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        classCode.toUpperCase(),
-                        style: TextStyle(
-                            color:
-                                isPrimary ? Colors.grey.shade800 : Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: Resizable.size(context, 11),
-                            shadows: [
-                              BoxShadow(
-                                  color: Colors.grey.shade500.withOpacity(0.8),
-                                  blurRadius: Resizable.padding(context, 3),
-                                  offset: const Offset(1, 1)),
-                            ]),
-                      ),
-                      AutoSizeText(
-                        title,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: Resizable.size(context, 18),
-                        ),
-                      ),
-                      isCompleted
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  ShadowText(
-                                    "(Đã Kết Thúc)",
-                                    shadowColor: primaryColor,
-                                    shadow: Resizable.padding(context, 3),
-                                    color: primaryColor,
-                                    style: TextStyle(
-                                      fontSize: Resizable.font(context, 13),
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ])
-                          : Container(
-                              constraints: BoxConstraints(
-                                maxWidth: Resizable.padding(context, 290),
-                              ),
-                              padding: EdgeInsets.only(
-                                right: Resizable.padding(context, 10),
-                              ),
-                              child: SlideProgress(
-                                isRed: isPrimary,
-                                percent: progress,
-                                text: text,
-                              )),
-                    ],
-                  ),
-                ))
-              ],
-            ),
-            description.isNotEmpty
-                ? Padding(
+          child: Padding(padding: EdgeInsets.all(Resizable.padding(context, 7)),child: Row(
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Padding(
+                      padding: EdgeInsets.all(Resizable.padding(context,  5)),
+                      child: Image.asset(
+                     'assets/icons/ic_learn_1.png',
+                    fit: BoxFit.cover,
+                  ))),
+              Expanded(
+                  flex: 3,
+                  child: Padding(
                     padding: EdgeInsets.only(
-                      top: Resizable.padding(context, 10),
-                      bottom: Resizable.padding(context, 18),
-                      right: Resizable.padding(context, 18),
-                      left: Resizable.padding(context, 15),
+                        top: Resizable.padding(context, 10),
+                        left: Resizable.padding(context, 5)),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          classCode.toUpperCase(),
+                          style: TextStyle(
+                              color: isPrimary
+                                  ? Colors.grey.shade800
+                                  : Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: Resizable.size(context, 11),
+                              shadows: [
+                                BoxShadow(
+                                    color:
+                                    Colors.grey.shade500.withOpacity(0.8),
+                                    blurRadius: Resizable.padding(context, 3),
+                                    offset: const Offset(1, 1)),
+                              ]),
+                        ),
+                        AutoSizeText(
+                          overflow: TextOverflow.ellipsis,
+                          title,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.w800,
+                            fontSize: Resizable.size(context, 18),
+                          ),
+                        ),
+                        isCompleted
+                            ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShadowText(
+                                "(Đã Kết Thúc)",
+                                shadowColor: primaryColor,
+                                shadow: Resizable.padding(context, 3),
+                                color: primaryColor,
+                                style: TextStyle(
+                                  fontSize: Resizable.font(context, 13),
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ])
+                            : Container(
+                            constraints: BoxConstraints(
+                              maxWidth: Resizable.padding(context, 290),
+                            ),
+                            child: SlideProgress(
+                              isRed: isPrimary,
+                              percent: progress,
+                              text: text,
+                            )),
+                        description.isNotEmpty
+                            ? Text(
+                          overflow: TextOverflow.ellipsis,
+                          description,
+                          maxLines: 5,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                              height: 1.25,
+                              fontSize: Resizable.font(context, 12),
+                              fontWeight: FontWeight.w500,
+                              color: isPrimary
+                                  ? Colors.grey.shade600
+                                  : Colors.white),
+                        )
+                            : Container(),
+                      ],
                     ),
-                    child: Text(
-                      overflow: TextOverflow.ellipsis,
-                      description,
-                      maxLines: 5,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          height: 1.25,
-                          fontSize: Resizable.font(context, 12),
-                          fontWeight: FontWeight.w500,
-                          color:
-                              isPrimary ? Colors.grey.shade600 : Colors.white),
-                    ),
-                  )
-                : SizedBox(height: Resizable.padding(context, 15)),
-          ])),
+                  ))
+            ],
+          ))),
     );
   }
 }

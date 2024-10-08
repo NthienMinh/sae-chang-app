@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-const MaterialColor primaryColor = MaterialColor(0xff4c956c, <int, Color>{
+const MaterialColor primaryColor = MaterialColor(0xff2C6E49, <int, Color>{
   50: Color(0xffd9ffe8),
   100: Color(0xffbdeacf),
   200: Color(0xffa1d5b6),
   300: Color(0xff84bf9e),
   400: Color(0xff68aa85),
-  500: Color(0xff4c956c),
+  500: Color(0xff2C6E49),
   600: Color(0xff3b7c56),
   700: Color(0xff2a6341),
   800: Color(0xff19492c),
@@ -40,9 +40,9 @@ const List<Color> lightGradientColor = [
   Color(0xffFBE9B7)
 ];
 
-const List<Color> orangeGradientColor = [
-  Color(0xffFF7700),
-  Color(0xffFFCE44)
+const List<Color> primaryGradientColor = [
+  Color(0xff2C6E49),
+  Color(0xff3b7c56)
 ];
 List<BoxShadow> itemShadow = [
   const BoxShadow(color: primaryColor, blurRadius: 4),

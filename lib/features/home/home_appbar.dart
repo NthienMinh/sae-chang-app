@@ -35,7 +35,7 @@ class HomeAppbar extends StatelessWidget {
                       ),
                     )),
                 Expanded(
-                    flex: 3,
+                    flex: 7,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
