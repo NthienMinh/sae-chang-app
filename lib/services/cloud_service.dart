@@ -7,15 +7,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sae_chang/configs/prefKeys_configs.dart';
 import 'package:sae_chang/features/bloc/connect_cubit.dart';
 import 'package:sae_chang/features/function/functions.dart';
 import 'package:sae_chang/models/base_model/question_model.dart';
 import '../shared_preferences.dart';
 
-
 class CloudService {
-  void uploadToFb(String style,int id, int resultId, QuestionModel question, int type,
-      BuildContext context, [ Function()? onSubmit]) async {
+  void uploadToFb(String style, int id, int resultId, QuestionModel question,
+      int type, BuildContext context,
+      [Function()? onSubmit]) async {
     await Future.delayed(const Duration(milliseconds: 500));
     debugPrint('flase: ${question.id.toString()}');
     question.listUrl.clear();
@@ -24,24 +25,26 @@ class CloudService {
       if (context.mounted && !context.read<ConnectCubit>().isClosed) {
         internetConnected = context.read<ConnectCubit>().state;
       }
-    }
-    catch(e) {
+    } catch (e) {
       Functions.logDebug('errror conect: $e');
     }
 
-    var key = await BaseSharedPreferences.getKey(style, id, resultId, 'history_upload');
+    var key = await BaseSharedPreferences.getKey(
+        style, id, resultId, 'history_upload');
+
+    var userId = await BaseSharedPreferences.getIntValue(PrefKeyConfigs.userId);
 
     await Future.forEach(question.answered, (item) async {
-      var storagePath = '${type == 0 ? 'question_result_image' : 'question_voice_records'}/${type == 0 ? 'image' : 'audio'}_${question.answered.indexOf(item)}_question_${question.id}_lesson_${id}_result_$resultId${type == 0 ? '.png' : ''}';
+      var storagePath =
+          '${type == 0 ? 'question_result_image' : 'question_voice_records'}/${type == 0 ? 'image' : 'audio'}_${question.answered.indexOf(item)}_user_${userId}_question_${question.id}_lesson_${id}_result_$resultId${type == 0 ? '.png' : ''}';
 
       try {
         Reference reference = FirebaseStorage.instance.ref(storagePath);
 
         await Future.delayed(const Duration(seconds: 1));
-        if(!File(item).existsSync()) {
+        if (!File(item).existsSync()) {
           question.listUrl = ['error'];
           return;
-
         }
 
         UploadTask uploadTask = reference.putFile(
@@ -52,7 +55,6 @@ class CloudService {
         StreamSubscription<TaskSnapshot>? task;
         task =
             uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
-
           if (!internetConnected) {
             if (question.listUrl.length < question.answered.length) {
               question.listUrl.add('failed');
@@ -90,7 +92,8 @@ class CloudService {
               if (question.listUrl.length < question.answered.length) {
                 var url = (await taskSnapshot.ref.getDownloadURL());
                 question.listUrl.add(url);
-                if(onSubmit != null && question.listUrl.length == question.answered.length) {
+                if (onSubmit != null &&
+                    question.listUrl.length == question.answered.length) {
                   onSubmit();
                 }
                 await saveUrlLocal(key, url, question);
@@ -110,11 +113,11 @@ class CloudService {
                 'FirebaseException fail => listUrl : ${question.listUrl.length} | answered:${question.answered.length}',
             toastLength: Toast.LENGTH_LONG);
       }
-    }).whenComplete(() {}).timeout( Duration(seconds: question.answered.length * 180), onTimeout: () {
+    }).whenComplete(() {}).timeout(
+        Duration(seconds: question.answered.length * 180), onTimeout: () {
       question.listUrl = ['error'];
       return;
     });
-
   }
 
   saveUrlLocal(String key, String url, QuestionModel question) async {
@@ -186,7 +189,6 @@ class CloudService {
     return internetConnected;
   }
 
-
   Future<bool> isUrlDownloadable(String url) async {
     try {
       final response = await Dio().head(url);
@@ -201,5 +203,3 @@ class CloudService {
     }
   }
 }
-
-
