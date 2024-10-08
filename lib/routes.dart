@@ -10,13 +10,16 @@ import 'package:sae_chang/screens/home/home_screen.dart';
 import 'package:sae_chang/screens/listening/practice_listening_detail_screen.dart';
 import 'package:sae_chang/screens/listening/practice_listening_screen.dart';
 import 'package:sae_chang/screens/login/login_screen.dart';
+import 'package:sae_chang/screens/practice/practice_screen.dart';
 import 'package:sae_chang/screens/reading/reading_detail_screen.dart';
 import 'package:sae_chang/screens/reading/reading_screen.dart';
+import 'package:sae_chang/screens/result/result_screen.dart';
 import 'package:sae_chang/screens/splash/splash_screen.dart';
 import 'package:sae_chang/screens/vocabulary/vocabulary_screen.dart';
 
 import 'configs/app_configs.dart';
 import 'features/detail_class/lessons/lesson_class_view.dart';
+import 'features/practice/multiple_choice/image_list.dart';
 
 class Routes {
   static const splash = "/";
@@ -72,44 +75,44 @@ class Routes {
                 userClass: map['user_class'],
                 classModel: map['class_model'],
                 courseModel: map['course_model']));
-      //
-      // case Routes.practice:
-      //   Map map = settings.arguments as Map;
-      //   return MaterialPageRoute(
-      //       builder: (context) => PracticeScreen(
-      //             id: map['id'],
-      //             type: map['type'],
-      //             resultId: map['resultId'],
-      //             dataId: map['dataId'],
-      //             duration: map['duration'],
-      //             isOffline: map['isOffline'],
-      //             userId: map['userId'],
-      //             classId: map['classId'],
-      //           ));
-      // case Routes.result:
-      //   Map map = settings.arguments as Map;
-      //   return MaterialPageRoute(
-      //       builder: (context) => ResultScreen(
-      //             id: map['id'],
-      //             type: map['type'],
-      //             resultId: map['resultId'],
-      //             dataId: map['dataId'],
-      //             isOffline: map['isOffline'],
-      //             userId: map['userId'],
-      //             classId: map['classId'],
-      //             score: map['score'],
-      //           ));
-      // case Routes.fullScreen:
-      //   Map map = settings.arguments as Map;
-      //   return MaterialPageRoute(
-      //     settings: settings,
-      //     builder: (context) => ImageFullScreenList(
-      //       imageList: map['imageList'],
-      //       init: map['init'],
-      //       type: map['type'],
-      //       dir: map['dir'],
-      //     ),
-      //   );
+
+      case Routes.practice:
+        Map map = settings.arguments as Map;
+        return MaterialPageRoute(
+            builder: (context) => PracticeScreen(
+                  id: map['id'],
+                  type: map['type'],
+                  resultId: map['resultId'],
+                  dataId: map['dataId'],
+                  duration: map['duration'],
+                  isOffline: map['isOffline'],
+                  userId: map['userId'],
+                  classId: map['classId'],
+                ));
+      case Routes.result:
+        Map map = settings.arguments as Map;
+        return MaterialPageRoute(
+            builder: (context) => ResultScreen(
+                  id: map['id'],
+                  type: map['type'],
+                  resultId: map['resultId'],
+                  dataId: map['dataId'],
+                  isOffline: map['isOffline'],
+                  userId: map['userId'],
+                  classId: map['classId'],
+                  score: map['score'],
+                ));
+      case Routes.fullScreen:
+        Map map = settings.arguments as Map;
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => ImageFullScreenList(
+            imageList: map['imageList'],
+            init: map['init'],
+            type: map['type'],
+            dir: map['dir'],
+          ),
+        );
       case Routes.lesson:
         Map map = settings.arguments as Map;
         return MaterialPageRoute(
