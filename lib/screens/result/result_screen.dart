@@ -97,7 +97,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           isOffline: widget.isOffline,
                           soundQuestionCubit: widget.soundQuestionCubit,
                           questionModel: cubit.listQuestions.firstWhere(
-                              (element) => element == e.questionId), cubit: cubit,
+                              (element) => element.id == e.questionId), cubit: cubit,
                         )),
                     SizedBox(height: Resizable.size(context, 20))
                   ],
