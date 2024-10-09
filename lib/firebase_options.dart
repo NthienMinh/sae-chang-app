@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -27,7 +30,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,16 +46,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCWuOknQIOsz6DUr3_zWChqGsPbQQKAXZE',
-    appId: '1:655468386229:web:4cbcf47fe3c8dd2ed42bfc',
-    messagingSenderId: '655468386229',
-    projectId: 'pls-student',
-    authDomain: 'pls-student.firebaseapp.com',
-    storageBucket: 'pls-student.appspot.com',
-    measurementId: 'G-3YXSZFQ281',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC4UjdeebAt3SgFLzah97nJiBKsz4KMP5U',
     appId: '1:655468386229:android:6b190558a03cf5afd42bfc',
@@ -60,11 +56,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAOqqOS5Ph_gYIrRVaP2bWKIf8qAN-_VI0',
-    appId: '1:655468386229:ios:9f1257e14e3fae69d42bfc',
+    appId: '1:655468386229:ios:42b4c37c7740f7a5d42bfc',
     messagingSenderId: '655468386229',
     projectId: 'pls-student',
     storageBucket: 'pls-student.appspot.com',
-    iosBundleId: 'com.example.saeChang',
+    iosBundleId: 'vn.edu.saechang.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -74,15 +70,5 @@ class DefaultFirebaseOptions {
     projectId: 'pls-student',
     storageBucket: 'pls-student.appspot.com',
     iosBundleId: 'com.example.saeChang',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCWuOknQIOsz6DUr3_zWChqGsPbQQKAXZE',
-    appId: '1:655468386229:web:caa0069fdbb43aacd42bfc',
-    messagingSenderId: '655468386229',
-    projectId: 'pls-student',
-    authDomain: 'pls-student.firebaseapp.com',
-    storageBucket: 'pls-student.appspot.com',
-    measurementId: 'G-8BRXG9WPNP',
   );
 }
